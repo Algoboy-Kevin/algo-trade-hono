@@ -1,0 +1,80 @@
+{
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "test": "jest --forceExit --silent",
+    "migrate:delete": "npx wrangler d1 delete",
+    "migrate:init": "npx wrangler d1 create",
+    "migrate:create": "npx wrangler d1 migrations create",
+    "migrate:fill": "npx prisma migrate diff --from-schema-datamodel ./prisma/schema.before.prisma --to-schema-datamodel ./prisma/schema.prisma --script > migrations/$(ls -t ./migrations | head -n1)",
+    "migrate:execute": "npx wrangler d1 migrations apply"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.4.0",
+    "@hono/zod-openapi": "^0.14.8",
+    "@prisma/adapter-d1": "^5.16.1",
+    "@prisma/client": "^5.16.1",
+    "hono": "^4.3.2",
+    "jose": "^5.6.3",
+    "nanoid": "^5.0.7",
+    "prisma": "^5.16.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.8",
+    "esbuild-jest": "^0.5.0",
+    "jest": "^29.7.0",
+    "jest-environment-miniflare": "^2.14.2",
+    "ts-jest": "^29.1.5",
+    "wrangler": "^3.32.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "text"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": [
+        "ts-jest",
+        {
+          "diagnostics": {
+            "ignoreCodes": [
+              "TS151001"
+            ]
+          }
+        }
+      ]
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "global.d.ts",
+      "/state",
+      "index\\.ts",
+      "schema\\.ts",
+      "\\.dto\\.ts$",
+      "\\.interface\\.ts$"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 85
+      }
+    },
+    "collectCoverage": true
+  }
+}

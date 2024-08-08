@@ -1,0 +1,1 @@
+type OrderCommandType = "OPEN_LIMIT" | "CANCEL_LIMIT" | "CLOSE_ALL";
