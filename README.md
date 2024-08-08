@@ -42,7 +42,7 @@ npm run migrate:execute
 
 ## Endpoint
 
-The endpoint for the webhook is `/v1/binance`. The request body should be in JSON string format. You can customize the endpoint and integrate with your preferred broker API (e.g., Binance, Coinbase, etc.). 
+The endpoint for the webhook is `/v1/bingx`. The request body should be in JSON string format. You can customize the endpoint and integrate with your preferred broker API (e.g., Binance, Coinbase, etc.). 
 
 ## Contribute
 Feel free to customize the endpoint or add  broker according to your specific requirements.
