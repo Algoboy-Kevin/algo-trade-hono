@@ -10,7 +10,6 @@ CREATE TABLE "LogsWebhook" (
 CREATE TABLE "LogsOrder" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "alert_name" TEXT NOT NULL,
-    "response" TEXT NOT NULL,
     "body" TEXT NOT NULL,
     "message" TEXT NOT NULL,
     "is_error" BOOLEAN NOT NULL DEFAULT false,

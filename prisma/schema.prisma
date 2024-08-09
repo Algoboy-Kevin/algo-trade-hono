@@ -25,7 +25,6 @@ model LogsWebhook {
 model LogsOrder {
   id String @id
   alert_name String
-  response String
   body String
   message String
   is_error Boolean @default(false)

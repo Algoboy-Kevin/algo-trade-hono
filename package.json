@@ -3,11 +3,12 @@
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts",
     "test": "jest --forceExit --silent",
-    "migrate:delete": "npx wrangler d1 delete",
-    "migrate:init": "npx wrangler d1 create",
-    "migrate:create": "npx wrangler d1 migrations create",
+    "migrate:delete": "npx wrangler d1 delete algotrade-db",
+    "migrate:init": "npx wrangler d1 create algotrade-db",
+    "migrate:create": "npx wrangler d1 migrations create algotrade-db",
     "migrate:fill": "npx prisma migrate diff --from-schema-datamodel ./prisma/schema.before.prisma --to-schema-datamodel ./prisma/schema.prisma --script > migrations/$(ls -t ./migrations | head -n1)",
-    "migrate:execute": "npx wrangler d1 migrations apply"
+    "migrate:execute": "npx wrangler d1 migrations apply algotrade-db --remote",
+    "migrate:execute-local": "npx wrangler d1 migrations apply algotrade-db --local"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.4.0",

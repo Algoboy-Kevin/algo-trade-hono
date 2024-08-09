@@ -127,6 +127,9 @@ export const createOrder = async (orderData: any) => {
       payload = await response.json();
       status = response.status
       break;
+
+    default:
+      throw Error("Wrong command type! (OPEN_LIMIT, CANCEL_LIMIT, CLOSE_ALL")
   }
 
   return { response, payload, status };
@@ -153,7 +156,6 @@ export const createResponseLogs = async (
   prisma: PrismaClient, 
   txId: string,
   alertName: string,
-  response: string,
   body: string,
   message: string
 ) => {
@@ -161,7 +163,6 @@ export const createResponseLogs = async (
     data: {
       id: txId,
       alert_name: alertName,
-      response: response,
       body: body,
       message
     }

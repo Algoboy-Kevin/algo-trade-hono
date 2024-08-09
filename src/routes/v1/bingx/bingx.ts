@@ -11,22 +11,21 @@ bingx.use(prismaMiddleware);
 
 bingx.openapi(PostCreateOrder, async (c: Context<Env>) => {
   const txId = randomUUID();
-  const body = await c.req.json();
+  const body = await c.req.json() as OrderDTOType;
   const prisma = c.get('prisma');
-  let response: any = "";
+
   let payload: any = "";
 
   try {
     // Create webhook logs
-    await createWebhookLog(prisma, txId, body.name, body);
+    await createWebhookLog(prisma, txId, body.alertName, JSON.stringify(body));
 
     // Create order and stringify json, D1 can only store json string
-    const orderResponse  = await createOrder(body);
-    response = JSON.stringify(orderResponse.response);
+    const orderResponse  = await createOrder(body) as any;
     payload = JSON.stringify(orderResponse.payload);
 
     // Check the response status and throws error if 
-    const isSuccess = orderResponse.status == 200 || orderResponse.status == 201;
+    const isSuccess = orderResponse.status == 200 && orderResponse?.payload?.code == 0
     if (!isSuccess) {
       throw Error("Order is not successful");
     };
@@ -35,8 +34,7 @@ bingx.openapi(PostCreateOrder, async (c: Context<Env>) => {
     await createResponseLogs(
       prisma, 
       txId, 
-      body.name, 
-      response, 
+      body.alertName, 
       payload,
       "Success!"
     );
@@ -49,10 +47,9 @@ bingx.openapi(PostCreateOrder, async (c: Context<Env>) => {
     await createResponseLogs(
       prisma, 
       txId, 
-      body.name, 
-      response, 
-      payload,
-      error.message
+      body.alertName ?? "", 
+      payload ?? "",
+      error.message ?? ""
     );
 
     return c.text(error.message, 500);

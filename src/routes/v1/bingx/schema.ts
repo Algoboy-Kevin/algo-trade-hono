@@ -11,11 +11,11 @@ export const PostCreateOrder = createRoute({
               "application/json": {
                   schema: z.any(),
                   example: {
-                    alertName: "ALERT_NAME",
                     type: "OPEN_LIMIT",
-                    symbol: "PEPE-USDT",
-                    price: 1000,
-                    quantity: 1000
+                    price: 0.0079828,
+                    symbol: "1000PEPE-USDT",
+                    quantity: 8413,
+                    alertName: "DEFAULT"
                   }
               }
           },
